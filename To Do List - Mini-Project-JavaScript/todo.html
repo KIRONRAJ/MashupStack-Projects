@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js" integrity="sha512-YSdqvJoZr83hj76AIVdOcvLWYMWzy6sJyIMic2aQz5kh2bPTd9dzY3NtdeEAzPp/PhgZqr4aJObB3ym/vsItMg==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./style.css">
+
+    <title>Mashup Todo List</title>
+</head>
+<body>
+<header>
+    <h1>Mashup Todo List</h1>
+</header>
+    <form id="forms">
+        <button class="search-todo" type="submit">
+            <i class="fas fa-search"></i>
+        </button>
+        <input type="text" class="search-bar" placeholder="Search here">
+        <input type="text" class="todo-input" placeholder="Add a Todo here">
+        <button class="todo-button" type="submit">
+            <i class="fas fa-plus-square"></i>
+        </button>   
+        <div class="select">
+            <select name="todos" class="filter-todo">
+                <option value="all">All</option>
+                <option value="completed">Completed</option>
+                <option value="incomplete">Incomplete</option>
+            </select>
+        </div>
+    </form>
+    <div class="todo-container">
+        <ul class="todo-list"></ul>
+    </div>	
+<script src="./todoapp.js"></script>
+</body>
+</html>
