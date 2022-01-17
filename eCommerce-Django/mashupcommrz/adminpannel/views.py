@@ -1,21 +1,9 @@
-from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls.base import reverse_lazy
-from forms import LoginForm
-from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse
-from django.urls import reverse
-
+from django.urls import reverse, reverse_lazy
+from .forms import LoginForm
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import user_passes_test
-
-
-def checksuperuser(user):
-    return user.is_superuser
-
-
-@user_passes_test(checksuperuser, login_url=reverse_lazy("login"))
-def admindashboard(request):
-    return render(request, "adminpannel/admindashboard.html", {})
 
 
 def loginadmin(request):
@@ -46,7 +34,16 @@ def loginadmin(request):
         return render(request, "adminpannel/login.html", {"form": login_form})
 
 
+def checksuperuser(user):
+    return user.is_superuser
+
+
 @user_passes_test(checksuperuser, login_url=reverse_lazy("login"))
 def logoutadmin(request):
     logout(request)
     return HttpResponseRedirect(reverse("login"))
+
+
+@user_passes_test(checksuperuser, login_url=reverse_lazy("login"))
+def admindashboard(request):
+    return render(request, "adminpannel/admindashboard.html", {})

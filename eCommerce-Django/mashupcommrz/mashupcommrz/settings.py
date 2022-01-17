@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-wy@0owusilf6h=4y-m$s)%t#qg#n8!6eu1rwqle=3^e-(6ynmj"
+SECRET_KEY = "django-insecure-v&t1!!ik6osa5p2sp--7^wtlt#wd4n&__iq1d-f&o9^nv^-x_x"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -111,16 +111,23 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Kolkata"
 
 USE_I18N = True
 
 USE_TZ = True
 
+# Email Backend
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.mailtrap.io"
+EMAIL_HOST_USER = "2bed5232d2967a"
+EMAIL_HOST_PASSWORD = "d4821db8cae652"
+EMAIL_PORT = "2525"
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-
 
 # The absolute path to the directory where collectstatic will collect static files for deployment.
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
@@ -133,14 +140,8 @@ STATIC_URL = "/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+LOGIN_REDIRECT_URL = "/"
+
+
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
-
-
-# Email Backend
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.mailtrap.io"
-EMAIL_HOST_USER = "2bed5232d2967a"
-EMAIL_HOST_PASSWORD = "d4821db8cae652"
-EMAIL_PORT = "2525"
