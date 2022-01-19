@@ -1,0 +1,63 @@
+{% extends "adminpannel/partials/adminpartials.html" %}
+{% block header %}
+{% include "adminpannel/partials/adminheader.html" %}
+{% endblock %}
+{% block sidenav %}
+{% include "adminpannel/partials/adminsidenav.html" %}
+{% endblock %}
+
+{%block content%}
+<section class="wrapper">
+    <div class="col-md-10 offset-md-1">
+        <div class="row">
+            <div class="panel-body">
+                <h1>Add Product</h1>
+                <form class="form-horizontal" action="{{request.get_full_path}}" method="POST" enctype="multipart/form-data">
+                    {%csrf_token%}
+                    {% if productform.errors %}
+                    {%for error in productform.errors.values%}
+                    <div class="alert alert-danger">
+                       {{error}}
+                    </div>
+                    {%endfor%}
+                    {% endif %}
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">Product Name</label>
+                        <div class="col-sm-10">
+                            {{productform.product_name}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">Product Description</label>
+                        <div class="col-sm-10">
+                            {{productform.product_description}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">Product Price</label>
+                        <div class="col-sm-10">
+                            {{productform.price}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">Product Image</label>
+                        <div class="col-sm-10">
+                            {{productform.product_image}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input type="submit" value="ADD PRODUCT" class="btn btn-primary pull-right">
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
