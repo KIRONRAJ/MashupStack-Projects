@@ -119,3 +119,4 @@ def removeproductfromcart(request):
         cart_instance = CustomerCart.objects.filter(customer = user,product=product_id)
         cart_instance.delete()
         return JsonResponse({'result':'success'})
+
