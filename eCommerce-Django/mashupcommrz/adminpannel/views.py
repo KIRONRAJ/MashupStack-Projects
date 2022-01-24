@@ -81,7 +81,7 @@ def addproduct(request):
 @csrf_exempt
 @user_passes_test(checksuperuser,login_url = reverse_lazy('login'))
 def changestatus(request):
-    if request.is_ajax():
+    if request.accepts("application/json"):
         product_id = int(request.POST['product'])
         action = request.POST['action']
         product_instance = Products.objects.get(id=product_id)
