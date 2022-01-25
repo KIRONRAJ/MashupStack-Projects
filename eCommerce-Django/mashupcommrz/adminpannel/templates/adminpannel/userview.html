@@ -1,0 +1,75 @@
+{% extends "adminpannel/partials/adminpartials.html" %}
+{% block header %}
+{% include "adminpannel/partials/adminheader.html" %}
+{% endblock %}
+
+
+{% block sidenav %}
+{% include "adminpannel/partials/adminsidenav.html" %}
+{% endblock %}
+
+{%block content%}
+<section class="wrapper">
+    <div class="row">
+        <div class="col-md-12">
+          <section class="panel">
+            <header class="panel-heading no-border">
+              <h1 style="font-weight: 700;">User Data</h1>
+            </header>
+            <section class="panel">
+                <div class="panel-body bio-graph-info">
+                  <h1>User Details</h1>
+                  <div class="row">
+                    <div class="bio-row">
+                      <p><span>First Name </span>: {{user.first_name}} </p>
+                    </div>
+                    <div class="bio-row">
+                      <p><span>Last Name </span>: {{user.last_name}}</p>
+                    </div>
+                    <div class="bio-row">
+                      <p><span>Email </span>:{{user.email}}</p>
+                    </div>
+                    <div class="bio-row">
+                      <p><span>User Name </span>: {{user.username}}</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              {%if orders%}
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr class="success">
+                    <th>Product</th>
+                    <th>Order Id</th>
+                    <th>Reciept</th>
+                    <th>Amount</th>
+                    <th>Phone</th>
+                    <th>Order Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {%for order in orders%}
+                  <tr>
+                      <td>{{order.product_name}}</td>
+                      <td>{{order.checkout_details.order_id}}</td>
+                      <td>{{order.checkout_details.reciept_num}}</td>
+                      <td>{{order.price}}</td>
+                      <td>{{order.checkout_details.delivery_phone}}</td>
+                      <td>{{order.checkout_details.total_amount}}</td>
+                  </tr>
+                  {%endfor%}
+                </tbody>
+              </table>
+              {%else%}
+              <div class="alert alert-block alert-danger fade in">
+                  <h4>There are no purchase by this user</h4>
+                </div>
+              {%endif%}
+          </section>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{%block scripts%}
+{% endblock %}

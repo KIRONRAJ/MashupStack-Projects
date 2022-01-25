@@ -1,3 +1,5 @@
+import csv
+import datetime
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from .forms import EditProductForm, LoginForm, ProductForm
@@ -6,6 +8,8 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import user_passes_test
 from adminpannel.models import Products
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+from customer.models import customerPayedProducts, CustomerCheckout
 
 def loginadmin(request):
     if request.user.is_authenticated:
@@ -134,3 +138,52 @@ def deleteproduct(request,product_id):
     product_instance = Products.objects.get(id=product_id)
     product_instance.delete()
     return HttpResponseRedirect(reverse('manageproducts'))
+
+@user_passes_test(checksuperuser,login_url = reverse_lazy('login'))
+def manageusers(request):
+    users = User.objects.filter(is_superuser = 0,is_staff = 0)
+    return render(request,'adminpannel/manageusers.html',{'users':users})
+
+@csrf_exempt
+@user_passes_test(checksuperuser,login_url = reverse_lazy('login'))
+def changestatususer(request):
+    if request.is_ajax():
+        action = request.POST['action']
+        user_id = int(request.POST['user_id'])
+        user_instance = User.objects.get(id=user_id)
+        if action == "disable":
+            user_instance.is_active = 0
+        else:
+            user_instance.is_active = 1
+        user_instance.save()
+        return JsonResponse({'result':'success'})
+
+@user_passes_test(checksuperuser,login_url = reverse_lazy('login'))
+def deleteuser(request,user_id):
+    user_instance = User.objects.get(id=user_id)
+    user_instance.delete()
+    return HttpResponseRedirect(reverse('manageusers'))
+
+@user_passes_test(checksuperuser,login_url = reverse_lazy('login'))
+def viewuser(request,user_id):
+    user_instance = User.objects.get(id=user_id)
+    orders = customerPayedProducts.objects.filter(customer = user_id, checkout_details__payment_complete =1)
+    return render(request,'adminpannel/userview.html',{'user':user_instance,'orders':orders})
+
+@user_passes_test(checksuperuser,login_url = reverse_lazy('login'))
+def adminviewreports(request):
+    return render(request,'adminpannel/adminreports.html',{})
+
+
+@user_passes_test(checksuperuser,login_url = reverse_lazy('login'))
+def todayssalesreport(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="salesreport"'+str(datetime.date.today())+'".csv"'
+    writer = csv.writer(response)
+    today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
+    today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
+    sales = CustomerCheckout.objects.filter(payedon__range=(today_min, today_max))
+    writer.writerow(['Order_id', 'Payment_id', 'Amount', 'Reciept', 'Phonenum', 'Address'])
+    for sale in sales:
+        writer.writerow([sale.order_id, sale.payment_id, sale.total_amount, sale.reciept_num, sale.delivery_phone, sale.delivery_address])
+    return response 

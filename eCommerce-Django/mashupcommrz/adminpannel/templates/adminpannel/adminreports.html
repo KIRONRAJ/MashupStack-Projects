@@ -1,0 +1,24 @@
+{% extends "adminpannel/partials/adminpartials.html" %}
+{% block header %}
+{% include "adminpannel/partials/adminheader.html" %}
+{% endblock %}
+
+
+{% block sidenav %}
+{% include "adminpannel/partials/adminsidenav.html" %}
+{% endblock %}
+
+{%block content%}
+<section class="wrapper">
+    <div class="row">
+        <div class="col-md-12">
+          <section class="panel p-5">
+            <header class="panel-heading no-border">
+              <h1 style="font-weight: 700;">Generate Reports</h1>
+            </header>
+            <a style="margin: 20px;" href="{% url 'todayssalesreport' %}" class="btn btn-sm btn-success">Todays sales Report</a>
+          </section>
+        </div>
+    </div>
+</section>
+{%endblock%}
