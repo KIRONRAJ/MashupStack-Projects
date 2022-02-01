@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 offset-md-1">
+      <div class="row">
+        <div class="col-md-1">
+          <h4 class="text-center">{{ item.likes }}</h4>
+          <p class="text-center">Likes</p>
+        </div>
+        <div class="col-md-8">
+          <a routerLink="/showquestion/{{ item.id }}"
+            ><h3 class="text-primary">{{ item.title }}</h3></a
+          >
+          <p>
+            {{ item.question }}
+          </p>
+        </div>
+      </div>
+      <hr />
+    </div>
+  </div>
+</div>
