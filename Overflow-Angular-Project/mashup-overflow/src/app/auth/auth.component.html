@@ -1,0 +1,136 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <!-- <app-alert
+        (close)="onHandleError()"
+        *ngIf="errorMessage"
+        [message]="errorMessage"
+      ></app-alert> -->
+      <h3 class="text-center mb-3">{{ isLoginMode ? "Login" : "Signup" }}</h3>
+      <div *ngIf="signupMessage" class="alert alert-success">
+        {{ signupMessage }}
+      </div>
+      <form #authForm="ngForm" (ngSubmit)="submitAuthForm(authForm.value)">
+        <div *ngIf="!isLoginMode" class="form-group">
+          <label for="email">Name</label>
+          <input
+            ngModel
+            type="text"
+            id="name"
+            name="name"
+            class="form-control"
+            required
+            #name="ngModel"
+          />
+          <span
+            *ngIf="name.invalid && name.touched && !errorMessage"
+            class="help-block text-danger"
+            >The name field is required</span
+          >
+          <span
+            *ngIf="
+              errorMessage &&
+              errorMessage.name != undefined &&
+              errorMessage.name.length > 0
+            "
+            class="text-danger help-block"
+          >
+            {{ errorMessage.name[0] }}
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="email">E-Mail</label>
+          <input
+            ngModel
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            required
+            #email="ngModel"
+          />
+          <span
+            *ngIf="email.invalid && email.touched && !errorMessage"
+            class="text-danger help-block"
+          >
+            Enter a valid email
+          </span>
+          <span
+            *ngIf="
+              errorMessage &&
+              errorMessage.email != undefined &&
+              errorMessage.email.length > 0
+            "
+            class="text-danger help-block"
+          >
+            {{ errorMessage.email[0] }}
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control"
+            required
+            ngModel
+            #password="ngModel"
+          />
+          <span
+            *ngIf="password.invalid && password.touched && !errorMessage"
+            class="text-danger help-block"
+          >
+            Password is required
+          </span>
+          <span
+            *ngIf="
+              errorMessage &&
+              errorMessage.password != undefined &&
+              errorMessage.password.length > 0
+            "
+            class="text-danger help-block"
+          >
+            {{ errorMessage.password[0] }}
+          </span>
+        </div>
+        <div *ngIf="!isLoginMode" class="form-group">
+          <label for="password">Confirm Password</label>
+          <input
+            type="password"
+            id="cnfpassword"
+            name="cnfpassword"
+            class="form-control"
+            required
+            ngModel
+            #cnfpassword="ngModel"
+          />
+          <span
+            *ngIf="cnfpassword.invalid && cnfpassword.touched && !errorMessage"
+            class="text-danger help-block"
+          >
+            Password confirmation is required
+          </span>
+          <span
+            *ngIf="
+              errorMessage &&
+              errorMessage.password != undefined &&
+              errorMessage.password.length > 1
+            "
+            class="text-danger help-block"
+          >
+            {{ errorMessage.password[1] }}
+          </span>
+        </div>
+        <div>
+          <button [disabled]="false" class="btn btn-primary">
+            {{ isLoginMode ? "Login" : "Signup" }}
+          </button>
+        </div>
+      </form>
+      <button class="btn btn-primary mt-2" (click)="onSwitchMode()">
+        Switch to {{ isLoginMode ? "Signup" : "Login" }}
+      </button>
+    </div>
+  </div>
+</div>

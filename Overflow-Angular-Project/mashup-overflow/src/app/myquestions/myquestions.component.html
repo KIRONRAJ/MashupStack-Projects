@@ -1,0 +1,8 @@
+<div *ngFor="let question of listQuestions">
+  <app-listitem [questionItem]="question"></app-listitem>
+</div>
+<app-pagination
+  *ngIf="questionResponse"
+  [questionResponse]="questionResponse"
+  (pageNumberEmitter)="fetchPaginatedResult($event)"
+></app-pagination>
